@@ -15,7 +15,7 @@ app.get('/profile', (req, res) => {
     }  
 );
 
-const products = [
+let products = [
     { id: 1, name: 'Milk' },
     { id: 2, name: 'Eggs' },
     { id: 3, name: 'Cheese' },
@@ -40,6 +40,18 @@ app.get('/products', (req, res) => {
         res.send(`This is the /products endpoint`);
     }
 });
+
+app.delete('/products/:id', (req, res) => {
+    const id = req.params.id;
+    const product = products.find((product) => product.id === Number(id));
+    if (product) { 
+        products.splice(products.indexOf(product), 1);
+        res.send(`${product.name} was deleted`);
+    } else { 
+        res.send(`Product does not exist`);
+    }
+});
+
 
 app.get('/cart', (req, res) => {
     res.send(`This is the /cart endpoint`);
