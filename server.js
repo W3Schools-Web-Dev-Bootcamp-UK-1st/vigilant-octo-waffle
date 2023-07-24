@@ -3,7 +3,14 @@ const app = express();
 const port = 8000;
 const cors = require('cors');
 
+
+const router = require('./routers/userRoutes');
+const users = require('./controllers/userController');
+
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -58,15 +65,14 @@ app.get('/cart', (req, res) => {
     }
 );
 
-app.get('/register', (req, res) => {
-    res.send(`This is the /register endpoint`);
+app.get('/users', (req, res) => {
+    res.send(users);
     }
 );
 
-app.get('/login', (req, res) => {
-    res.send(`This is the /login endpoint`);
-    }
-);
+// with login and register user userRouter
+app.use('/user', router);
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
